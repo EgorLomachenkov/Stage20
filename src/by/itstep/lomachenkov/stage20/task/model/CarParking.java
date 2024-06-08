@@ -1,27 +1,25 @@
 package by.itstep.lomachenkov.stage20.task.model;
 
-import java.util.concurrent.CopyOnWriteArrayList;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
+
 import java.util.concurrent.TimeUnit;
 
 public class CarParking {
-    private CopyOnWriteArrayList<Car> carPlaces;
-    private int carsAmount;
     private int parkingTime;
+    private Logger logger;
 
-    public CarParking(CopyOnWriteArrayList<Car> carPlaces, int carsLimit, int parkingTime) {
-        this.carPlaces = carPlaces;
-        this.carsAmount = carsLimit;
+    public CarParking(int parkingTime, Logger logger) {
         this.parkingTime = parkingTime;
+        this.logger = logger;
     }
 
-    public void parking(Car car) {
+    public void parking() {
         try {
-            if (carsAmount++ < carPlaces.size()){
-                carPlaces.add(car);
-                TimeUnit.MILLISECONDS.sleep(parkingTime);
-            }
+            TimeUnit.SECONDS.sleep(parkingTime);
         } catch (InterruptedException exception) {
-            System.out.println(exception);
+            logger.error(exception);
         }
     }
 
